@@ -19,7 +19,6 @@ function HeaderBar(props) {
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text className="text-light">
                     Score: {props.currentScore} | Top Score: {props.topScore}
-
                 </Navbar.Text>
             </Navbar.Collapse>
         </Navbar>
