@@ -61,7 +61,7 @@ class App extends Component {
       <main className="row d-flex justify-content-center m-5">
 
         {this.state.elements.map(e =>
-          <Image onClick={() => this.clickedCard(e)} key={e} className="align-self-center" src={'./assets/images/' + e + '.png'} className="m-2 image-card" width={170} height={170} thumbnail />
+          <Image onClick={() => this.clickedCard(e)} key={e} className="align-self-center" src={'../public/assets/images/' + e + '.png'} className="m-2 image-card" width={170} height={170} thumbnail />
         )}
 
       </main>
