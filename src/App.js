@@ -4,69 +4,43 @@ import Navbar from 'react-bootstrap/Navbar'
 import Image from 'react-bootstrap/Image'
 
 class App extends Component {
-  // Setting this.state.friends to the friends json array
   state = {
     title: "Click image to begin!",
     currentScore: 0,
     topScore: 0,
     isClicked: false,
     isClickedId: [],
-    elements: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] //..some array
+    elements: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] 
   };
 
-  shuffleImages = () => {
-    let shuffled = this.state.elements.sort(() => Math.random() - 0.5);
-    this.setState({ elements: shuffled })
-    console.log(this.state.elements);
-
-  };
+  shuffleImages = () => this.setState({ elements: this.state.elements.sort(() => Math.random() - 0.5) });
 
   clickedCard = id => {
 
-    console.log(id);
-    console.log(this.state.isClickedId);
-
+    let newClickedId = [...this.state.isClickedId];
 
     if (!this.state.isClicked) {
-      this.setState({ isClicked: true });
-      this.setState({ isClickedId: id });
+      newClickedId.push(id);
+      this.setState({ isClicked: true, isClickedId: newClickedId, title: "Click different card to score" });
 
-      console.log(this.state.isClicked);
-      this.setState({ title: "Click different card to score" })
-
-      console.log("new game");
-
-
-    } else if ((this.state.isClicked) && !(this.state.isClickedId.includes(id))) {
-
-      this.setState({ currentScore: ++this.state.currentScore, isClicked: this.state.isClickedId.push(id) })
+    } else if ((this.state.isClicked) && (!newClickedId.includes(id))) {
+      newClickedId.push(id);
+      this.setState({ isClickedId: newClickedId, currentScore: ++this.state.currentScore, title: "Great! Click a card you haven't before" })
       this.shuffleImages();
-      console.log("added point");
-      this.setState({ title: "Great! Click card you haven't before" })
-
 
     } else {
-      this.setState({ title: "You lost! Click card to begin!" })
+      if (this.state.currentScore > this.state.topScore) { this.setState({ topScore: this.state.currentScore })}
 
-      if (this.state.currentScore > this.state.topScore) {
-        this.setState({ topScore: this.state.currentScore });
-      }
-      this.setState({ currentScore: 0 })
-      this.setState({ isClicked: false })
-      this.setState({ isClickedId: -1 })
+      this.setState({ title: "You lost! Click card to begin!", isClickedId: [-2, -3], currentScore: 0, isClicked: false })
       this.shuffleImages();
-
-      console.log("lost");
-
-
     }
     return null;
   };
 
 
   render() {
-    return (<div>
 
+    return (<div>
 
       <Navbar bg="primary" className="text-light">
         <Navbar.Brand href="#home" className="text-light"> <b>Clicky Game!</b> </Navbar.Brand>
